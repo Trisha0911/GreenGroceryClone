@@ -1,74 +1,94 @@
-import "./productList.css";
-import { DataGrid } from "@material-ui/data-grid";
-import { DeleteOutline } from "@material-ui/icons";
-import { Link } from "react-router-dom";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { deleteProduct, getProducts } from "../../redux/apiCalls";
+import styled from "styled-components";
+import Navbar from "../components/Navbar";
+import Announcement from "../components/Announcement";
+import Products from "../components/Products";
+import Newsletter from "../components/Newsletter";
+import Footer from "../components/Footer";
+import { mobile } from "../responsive";
+import { useLocation } from "react-router";
+import { useState } from "react";
 
-export default function ProductList() {
-  const dispatch = useDispatch();
-  const products = useSelector((state) => state.product.products);
+const Container = styled.div``;
 
-  useEffect(() => {
-    getProducts(dispatch);
-  }, [dispatch]);
+const Title = styled.h1`
+  margin: 20px;
+`;
 
-  const handleDelete = (id) => {
-    deleteProduct(id, dispatch);
+const FilterContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Filter = styled.div`
+  margin: 20px;
+  ${mobile({ width: "0px 20px", display: "flex", flexDirection: "column" })}
+`;
+
+const FilterText = styled.span`
+  font-size: 20px;
+  font-weight: 600;
+  margin-right: 20px;
+  ${mobile({ marginRight: "0px" })}
+`;
+
+const Select = styled.select`
+  padding: 10px;
+  margin-right: 20px;
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+  ${mobile({ margin: "10px 0px" })}
+`;
+const Option = styled.option``;
+
+const ProductList = () => {
+  const location = useLocation();
+  const cat = location.pathname.split("/")[2];
+  const [filters, setFilters] = useState({});
+  const [sort, setSort] = useState("newest");
+
+  const handleFilters = (e) => {
+    const value = e.target.value;
+    setFilters({
+      ...filters,
+      [e.target.name]: value,
+    });
   };
 
-  const columns = [
-    { field: "_id", headerName: "ID", width: 220 },
-    {
-      field: "product",
-      headerName: "Product",
-      width: 200,
-      renderCell: (params) => {
-        return (
-          <div className="productListItem">
-            <img className="productListImg" src={params.row.img} alt="" />
-            {params.row.title}
-          </div>
-        );
-      },
-    },
-    { field: "inStock", headerName: "Stock", width: 200 },
-    {
-      field: "price",
-      headerName: "Price",
-      width: 160,
-    },
-    {
-      field: "action",
-      headerName: "Action",
-      width: 150,
-      renderCell: (params) => {
-        return (
-          <>
-            <Link to={"/product/" + params.row._id}>
-              <button className="productListEdit">Edit</button>
-            </Link>
-            <DeleteOutline
-              className="productListDelete"
-              onClick={() => handleDelete(params.row._id)}
-            />
-          </>
-        );
-      },
-    },
-  ];
-
   return (
-    <div className="productList">
-      <DataGrid
-        rows={products}
-        disableSelectionOnClick
-        columns={columns}
-        getRowId={(row) => row._id}
-        pageSize={12}
-        checkboxSelection
-      />
-    </div>
+    <Container>
+      <Navbar />
+      <Announcement />
+      <Title>{cat}</Title>
+      <FilterContainer>
+        <Filter>
+          <FilterText>Filter Products :</FilterText>
+          <Select name="color" onChange={handleFilters}>
+            <Option disabled>Color</Option>
+            <Option>Select</Option>
+            <Option>White</Option>
+            <Option>Orange</Option>
+            <Option>Red</Option>
+            <Option>Yellow</Option>
+            <Option>Green</Option>
+          </Select>
+          
+        </Filter>
+        <Filter>
+          <FilterText>Sort Products :</FilterText>
+          <Select onChange={(e) => setSort(e.target.value)}>
+            <Option disabled>Sort</Option>
+            <Option value="newest">Newest</Option>
+            <Option value="asc">Price (asc)</Option>
+            <Option value="desc">Price (desc)</Option>
+          </Select>
+        </Filter>
+      </FilterContainer>
+      <Products cat={cat} filters={filters} sort={sort} />
+      {/* <Newsletter /> */}
+      <Footer />
+    </Container>
   );
-}
+};
+
+export default ProductList;

@@ -1,119 +1,224 @@
-import { Link, useLocation } from "react-router-dom";
-import "./product.css";
-import Chart from "../../components/chart/Chart";
-import { productData } from "../../dummyData";
-import { Publish } from "@material-ui/icons";
-import { useSelector } from "react-redux";
-import { useEffect, useMemo, useState } from "react";
-import { userRequest } from "../../requestMethods";
+import { Add, Remove } from "@material-ui/icons";
+import styled from "styled-components";
+import Announcement from "../components/Announcement";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
+import Newsletter from "../components/Newsletter";
+import { mobile } from "../responsive";
+import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { publicRequest } from "../requestMethods";
+import { addProduct, delCart } from "../redux/cartRedux";
+import { useDispatch } from "react-redux";
+import { Typography } from "@material-ui/core";
 
-export default function Product() {
+const Container = styled.div``;
+
+const Wrapper = styled.div`
+  padding: 50px;
+  display: flex;
+  ${mobile({ padding: "10px", flexDirection: "column" })}
+`;
+
+const ImgContainer = styled.div`
+  flex: 1;
+`;
+
+const Image = styled.img`
+  width: 100%;
+  border-radius: 2%;
+  height: 90vh;
+  object-fit: cover;
+  ${mobile({ height: "40vh" })}
+`;
+
+const InfoContainer = styled.div`
+  flex: 1;
+  padding: 0px 50px;
+  ${mobile({ padding: "10px" })}
+`;
+
+const Title = styled.h1`
+  font-weight: 200;
+`;
+
+const Desc = styled.p`
+  margin: 20px 0px;
+`;
+
+const Price = styled.span`
+  font-weight: 100;
+  font-size: 40px;
+`;
+
+const FilterContainer = styled.div`
+  width: 50%;
+  margin: 30px 0px;
+  display: flex;
+  justify-content: space-between;
+  ${mobile({ width: "100%" })}
+`;
+
+const Filter = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const FilterTitle = styled.span`
+  font-size: 20px;
+  font-weight: 200;
+`;
+
+const FilterColor = styled.div`
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: ${(props) => props.color};
+  margin: 0px 5px;
+  cursor: pointer;
+`;
+
+// const FilterSize = styled.select`
+//   margin-left: 10px;
+//   padding: 5px;
+// `;
+
+// const FilterSizeOption = styled.option``;
+
+const AddContainer = styled.div`
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  ${mobile({ width: "100%" })}
+  cursor: pointer;
+`;
+
+const AmountContainer = styled.div`
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+`;
+
+const Amount = styled.span`
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  border: 1px solid teal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 5px;
+`;
+
+const Button = styled.button`
+  padding: 15px;
+  border: 2px solid teal;
+  background-color: white;
+  cursor: pointer;
+  font-weight: 500;
+
+  &:hover {
+    background-color: #f8f4f4;
+  }
+`;
+
+const Product = () => {
   const location = useLocation();
-  const productId = location.pathname.split("/")[2];
-  const [pStats, setPStats] = useState([]);
-
-  const product = useSelector((state) =>
-    state.product.products.find((product) => product._id === productId)
-  );
-
-  const MONTHS = useMemo(
-    () => [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Agu",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ],
-    []
-  );
+  const id = location.pathname.split("/")[2];
+  const [product, setProduct] = useState({});
+  const [quantity, setQuantity] = useState(1);
+  const [color, setColor] = useState("");
+  const [size] = useState("");
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const getStats = async () => {
+    const getProduct = async () => {
       try {
-        const res = await userRequest.get("orders/income?pid=" + productId);
-        const list = res.data.sort((a,b)=>{
-            return a._id - b._id
-        })
-        list.map((item) =>
-          setPStats((prev) => [
-            ...prev,
-            { name: MONTHS[item._id - 1], Sales: item.total },
-          ])
-        );
-      } catch (err) {
-        console.log(err);
-      }
+        const res = await publicRequest.get("/products/find/" + id);
+        setProduct(res.data);
+      } catch { }
     };
-    getStats();
-  }, [productId, MONTHS]);
+    getProduct();
+  }, [id]);
 
+  const handleQuantity = (type) => {
+    console.log(type)
+    if (type === "dec") {
+      quantity > 1 && setQuantity(quantity - 1);
+    } else {
+      setQuantity(quantity + 1);
+    }
+  };
+
+  const handleClick = () => {
+    dispatch(
+      addProduct({ ...product, id, quantity, color, size })
+    );
+  };
+  // const delClick = () => {
+  //   dispatch(
+  //     delCart()
+  //   );
+  // };
+  const [stockError, setStockError] = useState(false)
   return (
-    <div className="product">
-      <div className="productTitleContainer">
-        <h1 className="productTitle">Product</h1>
-        <Link to="/newproduct">
-          <button className="productAddButton">Create</button>
-        </Link>
-      </div>
-      <div className="productTop">
-        <div className="productTopLeft">
-          <Chart data={pStats} dataKey="Sales" title="Sales Performance" />
-        </div>
-        <div className="productTopRight">
-          <div className="productInfoTop">
-            <img src={product.img} alt="" className="productInfoImg" />
-            <span className="productName">{product.title}</span>
-          </div>
-          <div className="productInfoBottom">
-            <div className="productInfoItem">
-              <span className="productInfoKey">id:</span>
-              <span className="productInfoValue">{product._id}</span>
-            </div>
-            <div className="productInfoItem">
-              <span className="productInfoKey">Sales:</span>
-              <span className="productInfoValue">0</span>
-            </div>
-            <div className="productInfoItem">
-              <span className="productInfoKey">In stock:</span>
-              <span className="productInfoValue">{product.inStock? "Yes" : "No"}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="productBottom">
-        <form className="productForm">
-          <div className="productFormLeft">
-            <label>Product Name</label>
-            <input type="text" placeholder={product.title} />
-            <label>Product Description</label>
-            <input type="text" placeholder={product.desc} />
-            <label>Price</label>
-            <input type="text" placeholder={product.price} />
-            <label>In Stock</label>
-            <select name="inStock" id="idStock">
-              <option value="true">Yes</option>
-              <option value="false">No</option>
-            </select>
-          </div>
-          <div className="productFormRight">
-            <div className="productUpload">
-              <img src={product.img} alt="" className="productUploadImg" />
-              <label for="file">
-                <Publish />
-              </label>
-              <input type="file" id="file" style={{ display: "none" }} />
-            </div>
-            <button className="productButton">Update</button>
-          </div>
-        </form>
-      </div>
-    </div>
+    <Container>
+      <Navbar />
+      <Announcement />
+      <Wrapper>
+        <ImgContainer>
+          <Image src={product.img} />
+        </ImgContainer>
+        <InfoContainer>
+          <Title>{product.title}</Title>
+          <Desc>{product.desc}</Desc>
+          <Price>₹ {product.price}</Price>
+          <FilterContainer>
+            <Filter>
+              <FilterTitle>Color</FilterTitle>
+              {product.color?.map((c) => (
+                <FilterColor color={c} key={c} onClick={() => setColor(c)} />
+              ))}
+            </Filter>
+            {/* Removed Filter */}
+          </FilterContainer>
+          <AddContainer>
+            <AmountContainer>
+              <Remove onClick={() => {
+                const stock = product.stock
+                if (stock >= quantity) {
+                  setStockError("")
+                } else {
+                  setStockError("")
+                }
+                handleQuantity("dec")
+              }} />
+              <Amount>{quantity}</Amount>
+              <Add onClick={() => {
+                const stock = product.stock
+                if (stock <= quantity) {
+                  setStockError(`${product.title} are Out of Stock`)
+                  return
+                } else {
+                  handleQuantity("inc")
+                  setStockError("")
+                }
+              }} />
+            </AmountContainer>
+            <Button onClick={handleClick}>ADD TO CART</Button>
+            {/* <Button onClick={delClick}>Del TO CART</Button> */}
+            {(stockError !== "") && <Typography color="error" variant="h5">
+              {stockError}
+            </Typography>}
+
+          </AddContainer>
+        </InfoContainer>
+      </Wrapper>
+      {/* <Newsletter /> */}
+      <Footer />
+    </Container>
   );
-}
+};
+
+export default Product;

@@ -22,20 +22,20 @@ export default function Sidebar() {
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">Dashboard</h3>
           <ul className="sidebarList">
-            <Link to="/" className="link">
+            {/* <Link to="/" className="link">
             <li className="sidebarListItem">
               <LineStyle className="sidebarIcon" />
               Home
             </li>
             </Link>
-            {/* <li className="sidebarListItem">
+            <li className="sidebarListItem">
               <Timeline className="sidebarIcon" />
               Analytics
             </li>
             <li className="sidebarListItem">
               <TrendingUp className="sidebarIcon" />
               Sales
-            </li> */}
+            </li>
           </ul>
         </div>
         <div className="sidebarMenu">
@@ -46,48 +46,41 @@ export default function Sidebar() {
                 <PermIdentity className="sidebarIcon" />
                 Users
               </li>
-            </Link>
-            <Link to="/products" className="link">
+            </Link> */}
+            <Link to="/newproduct" className="link">
               <li className="sidebarListItem">
                 <Storefront className="sidebarIcon" />
                 Products
               </li>
             </Link>
-            <Link to="/orders" className="link">
-              <li className="sidebarListItem">
-                <WorkOutline className="sidebarIcon" />
-                Orders
-              </li>
-            </Link>
-            <Link to="/transactions" className="link">
-              <li className="sidebarListItem">
-                <AttachMoney className="sidebarIcon" />
-                Transactions
-              </li>
-            </Link>
-            
+            {/* <li className="sidebarListItem">
+              <AttachMoney className="sidebarIcon" />
+              Transactions
+            </li>
+            <li className="sidebarListItem">
+              <BarChart className="sidebarIcon" />
+              Reports
+            </li> */}
           </ul>
         </div>
-        <div className="sidebarMenu">
+        {/* <div className="sidebarMenu">
           <h3 className="sidebarTitle">Notifications</h3>
           <ul className="sidebarList">
-          <Link to="/contacts" className="link">
-              <li className="sidebarListItem">
-                <MailOutline className="sidebarIcon" />
-                Contact Forms
-              </li>
-            </Link>
-            {/* <li className="sidebarListItem">
+            <li className="sidebarListItem">
+              <MailOutline className="sidebarIcon" />
+              Mail
+            </li>
+            <li className="sidebarListItem">
               <DynamicFeed className="sidebarIcon" />
               Feedback
             </li>
             <li className="sidebarListItem">
               <ChatBubbleOutline className="sidebarIcon" />
               Messages
-            </li> */}
+            </li>
           </ul>
         </div>
-        {/* <div className="sidebarMenu">
+        <div className="sidebarMenu">
           <h3 className="sidebarTitle">Staff</h3>
           <ul className="sidebarList">
             <li className="sidebarListItem">
