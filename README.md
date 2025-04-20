@@ -1,70 +1,100 @@
-# Getting Started with Create React App
+# Green-Grocery
+## A Full Stack Development Project using MERN Stack.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Deployment Link: http://greengrocery30.herokuapp.com/
 
-## Available Scripts
+## Problem Motivation
+- In these present situations, it is difficult for farmers to sell their products at a fair price in markets. Customers are buying hybrid fruits and vegetables which are not good for health which contain harmful substances.
+- Customers are buying products at a higher price than the market price.
 
-In the project directory, you can run:
+## Problem Statement
+Farmers can sell fruits, vegetables, and dairy products at fair market prices on our website and customers can buy directly organic products from farmers through the website which are fresh and healthy for the body.
+ 
+## Problem Solution
+- Farmers can sell fruits, vegetables, and dairy products at fair market prices on our website
+- Customers can buy directly organic products from farmers through the website which are fresh and healthy for the body
 
-### `yarn start`
+## Project Overall Idea
+- Farmers can contact the GreenGrocery website and can sell their vegetables, fruits, and dairy products at fair prices.
+- The process includes, firstly, the delivery guy picks their products and the management staff is responsible for
+updating these products on the website.
+- Users can log in to the website and can buy organic fruits, vegetables, and dairy products which are very fresh and healthy that come directly from farmers.
+- Users can then select their required products and the respective quantity of each product and add them to the cart. After adding to the cart, the user can checkout and fill in the shipping details, and enter payment details.
+- After a successful transaction, the user will get an order confirmation and a tracking link. Users can resolve their queries in the Contact Us section.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+For more details about the project please refer to [**"Green Grocery Documentation.pdf"**][1] and [**"Green Grocery PPT.pdf"**][2]
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+[1]: https://github.com/anirudhjak06/GreenGrocery/blob/main/Green%20Grocery%20Documentation.pdf "Title"
+[2]: https://github.com/anirudhjak06/GreenGrocery/blob/main/Green%20Grocery%20PPT.pdf "Title"
 
-### `yarn test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Get Started
 
-### `yarn build`
+The below steps show how to get started with the code running!.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+★ Download git from the link:
+https://git-scm.com/downloads.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+★ Download node and npm from link
+https://nodejs.org/en/.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+★ After that in the terminal type ```pip install npm```.
 
-### `yarn eject`
+★ Open the command prompt and run the command: 
+```git clone https://github.com/anirudhjak06/GreenGrocery```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+★ We must now create two .env files in /client/ and /api/ folders.
+  
+★ In the client .env file:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Create an environment variable "REACT_APP_STRIPE" and assign it your stripe account url for successful completion of payments.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+★ In the api .env file:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- Create different variables with names as shown below 
 
-## Learn More
+  - MONGO_URL: For connecting to the MongoDB collection.
+  - PASS_SEC = This is used for encrypting the password and can be named anything. 
+  - JWT_SEC = This will be used for initialization of JWT Token and can be named anything as per convenience.
+  - STRIPE_KEY= Here, the url of the stripe key must be provided.
+  - CLOUD_NAME = This is the cloud name used for cloudinary.
+  - CLOUDINARY_API_KEY = This is the api key used for cloudinary.
+  - CLOUDINARY_API_SECRET = This is the api secret key of cloudinary account 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+★ Now, we have to install several dependencies.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Change the directory to client Folder and enter the command ```yarn``` in the command line.
+- Then, open another terminal and cd to the Admin Folder and enter the command ```yarn``` in the command line.
+- Repeat this process for Volunteer and then API folder as well in different terminals and enter the command ```yarn``` in the command lines.
 
-### Code Splitting
+★ Finally to run the servers, use the following command
+in all the terminals: ```yarn start```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+★ Then, the terminal will prompt to open different URL's or else
+enter the following URL's in your broweser for differenet pages.
+- Enter http://localhost:3000/ for the [Client] page (https://greengrocery30.herokuapp.com/).
+- Enter http://localhost:3001/ for the [Admin] page (https://greengrocery30-admin.herokuapp.com/).
+- Enter http://localhost:3002/ for the [Volunteer] page (https://greengrocery30-volunteer.herokuapp.com/).
 
-### Analyzing the Bundle Size
+The API will run in the http://localhost:5000/ for the backend part and connceting to the MongoDB database.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+★ After performing all the steps in correct order, the web application will start running smoothly. 
 
-### Making a Progressive Web App
+#### NOTE: The presentation and website demo of our project is available here.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Phase 1 Youtube link: https://youtu.be/1cBzuk6oSCI
 
-### Advanced Configuration
+<hr>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Phase 2 Youtube link: https://youtu.be/CiZMixbMb3k
+<hr>
 
-### Deployment
+## Group Members
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<pre>
+Anirudh Jakhotia          - S20190010007
+Neeraj Dusa               - S20190010047
+Harish Mullagura          - S20190010124
+Rakesh Ganeshula          - S20190010052
+Kanduri Jayanth Sri Ram   - S20190010084
+</pre>
